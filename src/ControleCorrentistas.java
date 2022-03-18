@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ControleCorrentistas {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner teclado = new Scanner(System.in);
 
 		int agencia = 0;
@@ -14,7 +15,7 @@ public class ControleCorrentistas {
 
 		int opcao = 0;
 
-		Cliente cliente = new Cliente(agencia, conta, nome, email, telefone, saldo);
+		Cliente cliente = new Cliente();
 
 		do {
 			System.out.println("=====CONTROLE DE CORRENTISTAS=====");
@@ -40,6 +41,7 @@ public class ControleCorrentistas {
 				break;
 			}
 			case 3: {
+				cliente.GravaArq();
 				System.out.println("Gravar em arquivo");
 				break;
 			}

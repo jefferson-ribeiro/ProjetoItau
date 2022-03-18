@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,30 +10,33 @@ public class Cliente {
 	private int conta;
 	private String nome;
 	private String email;
-	private long telefone;
+	private String telefone;
 	private double saldo;
 
 	ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
+	int cont = 0;
+
 	public void Cadastro() {
+
+		Cliente c = new Cliente();
 
 		System.out.println("#####-CADASTRO-#####");
 		System.out.println();
 		System.out.println("Informe a Agencia: ");
-		this.agencia = teclado.nextInt();
+		c.setAgencia(teclado.nextInt());
 		System.out.println("Informe a Conta: ");
-		this.conta = teclado.nextInt();
+		c.setConta(teclado.nextInt());
 		System.out.println("Informe o Nome do cliente: ");
-		this.nome = teclado.next();
+		c.setNome(teclado.next());
 		System.out.println("Informe o E-mail do cliente: ");
-		this.email = teclado.next();
+		c.setEmail(teclado.next());
 		System.out.println("Informe o Telefone do cliente: ");
-		this.telefone = teclado.nextLong();
+		c.setTelefone(teclado.next());
 		System.out.println("Informe o Saldo inicial da conta do cliente: ");
-		this.saldo = teclado.nextDouble();
+		c.setSaldo(teclado.nextDouble());
 
-		clientes.add(this);
-
+		clientes.add(c);
 	}
 
 	public void Consulta() {
@@ -49,13 +55,59 @@ public class Cliente {
 		}
 	}
 
-	public Cliente(int agencia, int conta, String nome, String email, long telefone, double saldo) {
+	public void GravaArq() throws IOException {
+		FileWriter arquivo = new FileWriter("d:\\correntistas.txt");
+		PrintWriter gravarArquivo = new PrintWriter(arquivo);
+
+		gravarArquivo.printf("=====Cadastro de Correntistas=====" + "%n");
+		gravarArquivo.printf("" + "%n");
+
+		int cont = 0;
+		for (Cliente c : clientes) {
+
+			if (cont < clientes.size()) {
+				cont++;
+			}
+
+			gravarArquivo.printf("Nome do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf(c.getNome() + "%n");
+
+			gravarArquivo.printf("Agencia do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf(c.getAgencia() + "%n");
+
+			gravarArquivo.printf("Conta do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf(c.getConta() + "%n");
+
+			gravarArquivo.printf("E-mail do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf(c.getEmail() + "%n");
+
+			gravarArquivo.printf("Telefone do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf(c.getTelefone() + "%n");
+
+			gravarArquivo.printf("Saldo do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf(c.getSaldo() + "%n");
+
+			gravarArquivo.printf("---------------------------------" + "%n");
+		}
+		arquivo.close();
+		System.out.println("O arquivo está gravado na unidade d:\\correntistas.txt");
+	}
+
+	public Cliente() {
 		this.agencia = agencia;
 		this.conta = conta;
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
 		this.saldo = saldo;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public int getAgencia() {
@@ -88,14 +140,6 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public long getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(int telefone) {
-		this.telefone = telefone;
 	}
 
 	public double getSaldo() {
