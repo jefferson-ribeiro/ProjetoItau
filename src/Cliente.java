@@ -1,8 +1,13 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 public class Cliente {
 	Scanner teclado = new Scanner(System.in);
@@ -50,7 +55,7 @@ public class Cliente {
 			System.out.println("Telefone: " + c.getTelefone());
 			System.out.println("Email: " + c.getEmail());
 			System.out.println(".........................");
-			System.out.println("Saldo = R$" + c.getSaldo());
+			System.out.println("Saldo = R$ " + c.getSaldo());
 			System.out.println();
 		}
 	}
@@ -59,8 +64,9 @@ public class Cliente {
 		FileWriter arquivo = new FileWriter("d:\\correntistas.txt");
 		PrintWriter gravarArquivo = new PrintWriter(arquivo);
 
+		gravarArquivo.printf("%n");
 		gravarArquivo.printf("=====Cadastro de Correntistas=====" + "%n");
-		gravarArquivo.printf("" + "%n");
+		gravarArquivo.printf("%n");
 
 		int cont = 0;
 		for (Cliente c : clientes) {
@@ -69,28 +75,67 @@ public class Cliente {
 				cont++;
 			}
 
-			gravarArquivo.printf("Nome do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("Dados do Cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("Nome: ");
 			gravarArquivo.printf(c.getNome() + "%n");
 
-			gravarArquivo.printf("Agencia do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("Agencia: ");
 			gravarArquivo.printf(c.getAgencia() + "%n");
 
-			gravarArquivo.printf("Conta do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("Conta: ");
 			gravarArquivo.printf(c.getConta() + "%n");
 
-			gravarArquivo.printf("E-mail do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("E-mail: ");
 			gravarArquivo.printf(c.getEmail() + "%n");
 
-			gravarArquivo.printf("Telefone do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("Telefone: ");
 			gravarArquivo.printf(c.getTelefone() + "%n");
 
-			gravarArquivo.printf("Saldo do cliente nº" + (cont) + "%n");
+			gravarArquivo.printf("Saldo = R$ ");
 			gravarArquivo.printf(c.getSaldo() + "%n");
 
 			gravarArquivo.printf("---------------------------------" + "%n");
 		}
 		arquivo.close();
 		System.out.println("O arquivo está gravado na unidade d:\\correntistas.txt");
+	}
+
+	public void ConsultaArq() {
+		String mostra = "";
+		String nomeArq = "d:\\correntistas.txt";
+		String linha = "";
+
+		File arq = new File(nomeArq);
+
+		if (arq.exists()) {
+			// Verifica se o arquivo está aberto
+			mostra = "Arquivo - " + arq + ", aberto com sucesso";
+			System.out.println(mostra);
+
+			// Verifica o tamanho do arquivo
+			mostra = "Tamanho do arquivo: " + Long.toString(arq.length());
+			System.out.println(mostra);
+
+			// Processo de tentativa de leitura das informações contidas no arquivo
+			try {
+				FileReader reader = new FileReader(nomeArq);
+				BufferedReader leitor = new BufferedReader(reader);
+
+				while (true) {
+					linha = leitor.readLine();
+					System.out.println(linha);
+					if (linha == null)
+						break;
+					mostra += linha + "\n";
+				}
+			} catch (Exception erro) {
+			}
+			JOptionPane.showMessageDialog(null, mostra, "Arquivo...", 1);
+			System.out.println("conteúdo existente");
+
+		} else
+			JOptionPane.showMessageDialog(null, "Arquivo Inexistente", "Erro", 0);
+
 	}
 
 	public Cliente() {

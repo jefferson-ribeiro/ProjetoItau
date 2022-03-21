@@ -6,13 +6,6 @@ public class ControleCorrentistas {
 	public static void main(String[] args) throws IOException {
 		Scanner teclado = new Scanner(System.in);
 
-		int agencia = 0;
-		int conta = 0;
-		String nome = null;
-		String email = null;
-		long telefone = 0;
-		double saldo = 0;
-
 		int opcao = 0;
 
 		Cliente cliente = new Cliente();
@@ -46,6 +39,7 @@ public class ControleCorrentistas {
 				break;
 			}
 			case 4: {
+				cliente.ConsultaArq();
 				System.out.println("Consulta arquivo de texto");
 				break;
 			}
